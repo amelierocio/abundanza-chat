@@ -6,7 +6,7 @@
   <title>Abundanza — Diagnóstico IA</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -24,7 +24,7 @@
     html, body { height: 100%; }
 
     body {
-      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-family: 'Inter', sans-serif;
       background: var(--bg);
       color: var(--text);
       line-height: 1.65;
@@ -33,9 +33,10 @@
     }
 
     .bb {
-      font-family: 'Bebas Neue', sans-serif;
-      letter-spacing: 0.13em;
-      line-height: 1.05;
+      font-family: 'Inter', sans-serif;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      line-height: 1.0;
     }
 
     /* ── Marble texture ─────────────────────────────── */
@@ -75,7 +76,19 @@
       justify-content: center;
       text-align: center;
       padding: 72px 32px 88px;
+      background-image: url('fondoapp4.png');
+      background-size: cover;
+      background-position: center top;
+      position: relative;
     }
+    #s-landing::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.72);
+      z-index: 0;
+    }
+    #s-landing > * { position: relative; z-index: 1; }
 
     .logo-ring {
       width: 120px; height: 120px;
@@ -374,7 +387,7 @@
       border: 1px solid var(--border);
       border-radius: 2px;
       color: var(--text);
-      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-family: 'Inter', sans-serif;
       font-size: 0.925rem;
       line-height: 1.55;
       letter-spacing: -0.005em;
@@ -419,7 +432,7 @@
       border: 1px solid rgba(200,200,200,0.2);
       border-radius: 0;
       color: var(--silver);
-      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-family: 'Inter', sans-serif;
       font-size: 0.78rem;
       letter-spacing: 0.02em;
       padding: 7px 14px;
