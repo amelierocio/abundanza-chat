@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>¿En qué andamos? — Abundanza</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #080808;
+      color: #E8E8E8;
+      font-family: 'Inter', 'Helvetica Neue', sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+      min-height: 100vh;
+      padding: 0 0 80px;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 64px 28px 56px;
+      text-align: center;
+      border-bottom: 1px solid #151515;
+    }
+    .hero .star {
+      font-size: 20px;
+      color: #C8C8C8;
+      display: block;
+      margin-bottom: 24px;
+    }
+    .hero .brand {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #555;
+      margin-bottom: 20px;
+      display: block;
+    }
+    .hero h1 {
+      font-size: 32px;
+      letter-spacing: -0.025em;
+      color: #F0F0F0;
+      line-height: 1.2;
+      margin-bottom: 16px;
+      max-width: 320px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .hero h1 .bold { font-weight: 700; }
+    .hero h1 .light { font-weight: 300; }
+    .hero p {
+      font-size: 14px;
+      color: #666;
+      font-weight: 300;
+      max-width: 280px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    /* ── SECTIONS ── */
+    .section {
+      padding: 48px 28px;
+      border-bottom: 1px solid #111;
+    }
+    .section-label {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #444;
+      margin-bottom: 14px;
+      display: block;
+    }
+    .section h2 {
+      font-size: 20px;
+      font-weight: 600;
+      color: #F0F0F0;
+      letter-spacing: -0.015em;
+      margin-bottom: 16px;
+      line-height: 1.3;
+    }
+    .section p {
+      font-size: 14px;
+      color: #888;
+      font-weight: 300;
+      line-height: 1.8;
+    }
+    .section p + p { margin-top: 12px; }
+    .section strong {
+      color: #C8C8C8;
+      font-weight: 500;
+    }
+
+    /* ── AMELIE ── */
+    .amelie-block {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin-top: 24px;
+      padding-top: 24px;
+      border-top: 1px solid #151515;
+    }
+    .amelie-avatar {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: #1a1a1a;
+      border: 1px solid #222;
+      flex-shrink: 0;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      color: #555;
+    }
+    .amelie-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .amelie-info .name {
+      font-size: 13px;
+      font-weight: 600;
+      color: #E8E8E8;
+      margin-bottom: 2px;
+    }
+    .amelie-info .role {
+      font-size: 11px;
+      color: #555;
+      margin-bottom: 2px;
+    }
+    .amelie-info .handle {
+      font-size: 11px;
+      color: #333;
+    }
+
+    /* ── CARDS ── */
+    .coming-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 20px;
+    }
+    .coming-card {
+      background: #0e0e0e;
+      border: 1px solid #1a1a1a;
+      border-radius: 12px;
+      padding: 20px;
+    }
+    .coming-card .tag {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #C8C8C8;
+      margin-bottom: 10px;
+      display: block;
+    }
+    .coming-card h3 {
+      font-size: 15px;
+      font-weight: 600;
+      color: #F0F0F0;
+      margin-bottom: 6px;
+    }
+    .coming-card p {
+      font-size: 12px;
+      color: #666;
+      font-weight: 300;
+      line-height: 1.6;
+    }
+    .coming-card.highlight { border-top: 2px solid #C8C8C8; }
+    .coming-card.highlight .tag { color: #C8C8C8; }
+
+    /* ── PARA VOS SI ── */
+    .perfil-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    .perfil-item {
+      background: #0e0e0e;
+      border: 1px solid #1a1a1a;
+      border-radius: 10px;
+      padding: 16px 18px;
+      font-size: 13px;
+      color: #AAA;
+      font-weight: 300;
+      line-height: 1.6;
+    }
+    .perfil-item .perfil-title {
+      font-size: 12px;
+      font-weight: 600;
+      color: #C8C8C8;
+      letter-spacing: 0.04em;
+      margin-bottom: 6px;
+    }
+
+    /* ── CUÁNDO ── */
+    .drop-block {
+      text-align: center;
+      padding: 56px 28px;
+      border-bottom: 1px solid #111;
+    }
+    .drop-block .drop-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #444;
+      margin-bottom: 16px;
+      display: block;
+    }
+    .drop-block .drop-date {
+      font-size: 40px;
+      font-weight: 700;
+      color: #F0F0F0;
+      letter-spacing: -0.02em;
+      line-height: 1;
+      margin-bottom: 10px;
+    }
+    .drop-block .drop-sub {
+      font-size: 13px;
+      color: #444;
+      font-weight: 300;
+    }
+
+    /* ── CTA ── */
+    .cta-section {
+      padding: 40px 28px 48px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 16px;
+      border-radius: 10px;
+      text-align: center;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      transition: opacity 0.2s;
+    }
+    .btn:active { opacity: 0.7; }
+    .btn-primary { background: #F0F0F0; color: #080808; }
+    .btn-secondary {
+      background: transparent;
+      border: 1px solid #222;
+      color: #666;
+    }
+
+    /* ── FOOTER ── */
+    .footer {
+      text-align: center;
+      padding: 28px 28px 0;
+      border-top: 1px solid #111;
+    }
+    .footer p {
+      font-size: 10px;
+      color: #2a2a2a;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <div class="hero">
+    <span class="star">✦</span>
+    <span class="brand">Abundanza</span>
+    <h1>
+      <span class="bold">Para la gente que hace que</span><br>
+      <span class="light">más gente baile.</span>
+    </h1>
+    <p>Una marca de educación para el mundo de la danza. Esto es lo que estamos construyendo.</p>
+  </div>
+
+  <!-- QUIÉNES SOMOS -->
+  <div class="section" style="background-image: linear-gradient(rgba(8,8,8,0.60), rgba(8,8,8,0.75)), url('enqueandamos2.jpg'); background-size: cover; background-position: center;">
+    <span class="section-label">Quiénes somos</span>
+    <h2>Un año investigando qué necesita el mundo de la danza.</h2>
+    <p>
+      Pasamos el último año investigando de cerca qué es lo que realmente le falta a los profes y directores de academia para <strong>vivir bien de la danza</strong>. Lo que encontramos fue siempre lo mismo: para nada falta de talento, ni estudio. Es falta de estructura y de aprendizajes por haber recorrido ese camino.
+    </p>
+    <p>
+      Abundanza nació de eso. Amelie Rocío — fundadora de Abundanza y cara del proyecto — es profe de danza y alguien que conoce de cerca lo que es amar enseñar y no saber cómo hacer crecer lo que construís.
+    </p>
+    <div class="amelie-block">
+      <div class="amelie-avatar">
+        <img src="yo.png" alt="Amelie Rocío" onerror="this.style.display='none'">
+      </div>
+      <div class="amelie-info">
+        <div class="name">Amelie Rocío</div>
+        <div class="role">Fundadora y cara del proyecto</div>
+        <div class="handle">@abundanza_</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LO QUE VIENE -->
+  <div class="section">
+    <span class="section-label">Lo que llega en mayo</span>
+    <h2>Tres cosas. Una gratuita. Dos para ir más fondo.</h2>
+    <div class="coming-grid">
+
+      <div class="coming-card highlight">
+        <span class="tag">Lista en 3 días · Gratis</span>
+        <h3>Abundanza Chat</h3>
+        <p>Una herramienta de IA que analiza tu academia o tu estrategia de contenido y te entrega un diagnóstico personalizado. Sin registrarte. Sin pagar nada.</p>
+      </div>
+
+      <div class="coming-card">
+        <span class="tag">Para profes de danza</span>
+        <h3>Abundanza La Mentoría</h3>
+        <p>Un grupo de 3 meses para profes que quieren sistematizar su proyecto y crecer.</p>
+      </div>
+
+      <div class="coming-card">
+        <span class="tag">Para directores de academia</span>
+        <h3>Abundanza Keep</h3>
+        <p>Un acompañamiento de 3 meses para directores que quieren construir un sistema real de crecimiento.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ESTO ES PARA VOS SI -->
+  <div class="section" style="background-image: linear-gradient(rgba(8,8,8,0.80), rgba(8,8,8,0.80)), url('enqueandamos1.jpg'); background-size: cover; background-position: center;">
+    <span class="section-label">Esto es para vos si</span>
+    <h2>Reconocés alguna de estas situaciones.</h2>
+    <div class="perfil-grid">
+
+      <div class="perfil-item">
+        <div class="perfil-title">Sos profe de danza</div>
+        Sabés bailar, sabés enseñar, tus alumnas te adoran — pero no tenés un sistema para crecer, y Instagram te genera más estrés que resultados.
+      </div>
+
+      <div class="perfil-item">
+        <div class="perfil-title">Dirigís una academia de danza</div>
+        Trabajás mucho, tu academia funciona, pero el dinero no cierra del todo — o no sabés cuántos alumnos nuevos van a entrar el mes que viene.
+      </div>
+
+    </div>
+  </div>
+
+  <!-- CUÁNDO -->
+  <div class="drop-block">
+    <span class="drop-label">¿Cuándo?</span>
+    <div class="drop-date">Mayo 2026</div>
+    <div class="drop-sub">Muy pronto.</div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-section">
+    <a href="https://www.instagram.com/abundanza_" target="_blank" class="btn btn-primary">
+      Seguinos en @abundanza_
+    </a>
+    <a href="https://wa.me/5493517731141?text=Hola%20Amelie%2C%20vi%20la%20p%C3%A1gina%20de%20Abundanza%20y%20quiero%20saber%20m%C3%A1s." target="_blank" class="btn btn-secondary">
+      Escribinos por WhatsApp
+    </a>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <p>Abundanza&trade; 2026 &middot; Todos los derechos reservados</p>
+  </div>
+
+</body>
+</html>
