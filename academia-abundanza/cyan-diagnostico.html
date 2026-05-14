@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diagnóstico Digital — Cyan Ocean</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #080808;
+    color: #E8E8E8;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+    letter-spacing: -0.012em;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 60px 48px;
+  }
+
+  /* HEADER */
+  .header {
+    border-bottom: 1px solid #2a2a2a;
+    padding-bottom: 40px;
+    margin-bottom: 48px;
+  }
+
+  .brand {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #888;
+    margin-bottom: 24px;
+  }
+
+  .brand span {
+    color: #C8C8C8;
+  }
+
+  h1 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 900;
+    font-size: 52px;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    color: #F0F0F0;
+    line-height: 0.95;
+    margin-bottom: 8px;
+  }
+
+  .subtitle {
+    color: #888;
+    font-size: 14px;
+    margin-top: 10px;
+  }
+
+  .star {
+    color: #C8C8C8;
+  }
+
+  /* SECCIONES */
+  .intro-box {
+    background: #111;
+    border-left: 3px solid #C8C8C8;
+    padding: 24px 28px;
+    margin-bottom: 48px;
+    color: #C8C8C8;
+    font-size: 14.5px;
+    line-height: 1.75;
+  }
+
+  h2 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 900;
+    font-size: 24px;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    color: #C8C8C8;
+    margin: 56px 0 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #1e1e1e;
+  }
+
+  h3 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 800;
+    font-size: 16px;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    color: #E8E8E8;
+    margin: 36px 0 12px;
+  }
+
+  h4 {
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    color: #888;
+    text-transform: uppercase;
+    margin: 24px 0 8px;
+  }
+
+  p {
+    color: #C8C8C8;
+    margin-bottom: 14px;
+  }
+
+  /* TABLA DE CUENTAS */
+  .account-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0 32px;
+    font-size: 14px;
+  }
+
+  .account-table th {
+    text-align: left;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #888;
+    padding: 10px 16px;
+    border-bottom: 1px solid #1e1e1e;
+  }
+
+  .account-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid #1a1a1a;
+    color: #C8C8C8;
+    vertical-align: top;
+  }
+
+  .account-table tr:hover td {
+    background: #0f0f0f;
+  }
+
+  .handle {
+    font-family: monospace;
+    font-size: 13px;
+    color: #E8E8E8;
+  }
+
+  .seg {
+    color: #F0F0F0;
+    font-weight: 500;
+  }
+
+  .role-main { color: #F0F0F0; }
+  .role-show { color: #aaa; }
+  .role-biz { color: #aaa; }
+  .role-sleep { color: #555; text-decoration: line-through; }
+
+  /* CUENTA CARD */
+  .account-card {
+    background: #0e0e0e;
+    border: 1px solid #1e1e1e;
+    padding: 28px 32px;
+    margin: 24px 0;
+  }
+
+  .account-card.principal {
+    border-color: #C8C8C8;
+  }
+
+  .account-header {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .account-name {
+    font-family: 'Inter', sans-serif;
+    font-weight: 900;
+    font-size: 18px;
+    letter-spacing: -0.01em;
+    color: #F0F0F0;
+  }
+
+  .account-seg {
+    font-size: 12px;
+    color: #555;
+    font-style: italic;
+  }
+
+  .tag {
+    display: inline-block;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    margin-left: 6px;
+    border: 1px solid #333;
+    color: #888;
+  }
+
+  .tag.principal-tag {
+    border-color: #C8C8C8;
+    color: #C8C8C8;
+  }
+
+  .tag.show-tag {
+    border-color: #444;
+    color: #aaa;
+  }
+
+  .tag.biz-tag {
+    border-color: #333;
+    color: #666;
+  }
+
+  /* CAMBIO ITEM */
+  .cambio {
+    margin: 14px 0;
+  }
+
+  .cambio-label {
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #555;
+    margin-bottom: 4px;
+  }
+
+  .cambio-actual {
+    background: #0a0a0a;
+    border-left: 2px solid #333;
+    padding: 10px 14px;
+    font-size: 13.5px;
+    color: #666;
+    margin-bottom: 6px;
+    font-style: italic;
+  }
+
+  .cambio-nuevo {
+    background: #111;
+    border-left: 2px solid #C8C8C8;
+    padding: 10px 14px;
+    font-size: 13.5px;
+    color: #E8E8E8;
+  }
+
+  /* MAPA VISUAL */
+  .mapa {
+    background: #0a0a0a;
+    border: 1px solid #1e1e1e;
+    padding: 32px;
+    margin: 28px 0;
+    font-family: monospace;
+    font-size: 13px;
+    line-height: 2;
+    color: #888;
+  }
+
+  .mapa .centro {
+    color: #F0F0F0;
+    font-size: 15px;
+  }
+
+  .mapa .activo {
+    color: #C8C8C8;
+  }
+
+  .mapa .duerme {
+    color: #333;
+  }
+
+  /* CHECKLIST */
+  .checklist {
+    list-style: none;
+    margin: 16px 0 24px;
+  }
+
+  .checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid #111;
+    color: #C8C8C8;
+    font-size: 14px;
+  }
+
+  .checklist li:last-child {
+    border-bottom: none;
+  }
+
+  .check-box {
+    width: 18px;
+    height: 18px;
+    border: 1px solid #333;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .checklist li strong {
+    color: #E8E8E8;
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  /* TABLA HIGHLIGHTS */
+  .hl-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+    margin: 14px 0 24px;
+  }
+
+  .hl-table th {
+    text-align: left;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #555;
+    padding: 8px 14px;
+    border-bottom: 1px solid #1a1a1a;
+  }
+
+  .hl-table td {
+    padding: 10px 14px;
+    border-bottom: 1px solid #111;
+    color: #C8C8C8;
+    vertical-align: top;
+  }
+
+  /* EMAIL TEMPLATE */
+  .email-box {
+    background: #0a0a0a;
+    border: 1px solid #222;
+    padding: 28px 32px;
+    margin: 20px 0;
+    font-size: 13.5px;
+    line-height: 1.9;
+  }
+
+  .email-box .email-label {
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #555;
+    margin-bottom: 16px;
+  }
+
+  .email-box p {
+    font-size: 13.5px;
+  }
+
+  .email-field {
+    color: #888;
+    font-size: 12px;
+    margin-bottom: 16px;
+  }
+
+  .email-field strong {
+    color: #C8C8C8;
+  }
+
+  /* HOJA DE RUTA */
+  .ruta {
+    margin: 20px 0;
+  }
+
+  .ruta-paso {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 8px;
+    align-items: flex-start;
+  }
+
+  .ruta-num {
+    font-family: 'Inter', sans-serif;
+    font-weight: 900;
+    font-size: 32px;
+    color: #1e1e1e;
+    line-height: 1;
+    flex-shrink: 0;
+    width: 32px;
+    text-align: center;
+  }
+
+  .ruta-content {
+    padding-top: 4px;
+  }
+
+  .ruta-content strong {
+    display: block;
+    color: #E8E8E8;
+    font-size: 14px;
+    margin-bottom: 2px;
+  }
+
+  .ruta-content span {
+    color: #666;
+    font-size: 13px;
+  }
+
+  .ruta-connector {
+    width: 1px;
+    height: 20px;
+    background: #1e1e1e;
+    margin: 0 0 8px 15px;
+  }
+
+  /* FOOTER */
+  .footer {
+    margin-top: 72px;
+    padding-top: 32px;
+    border-top: 1px solid #1a1a1a;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-brand {
+    font-family: 'Inter', sans-serif;
+    font-weight: 800;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #333;
+  }
+
+  .footer-info {
+    font-size: 12px;
+    color: #333;
+    text-align: right;
+  }
+
+  /* PRINT */
+  @media print {
+    body { background: white; color: #111; }
+    .page { padding: 20px; }
+    h1, h2, h3, .account-name, .brand, .ruta-num { color: #111 !important; }
+    p, .cambio-actual, .cambio-nuevo, .email-box, .checklist li, .hl-table td, .account-table td { color: #333 !important; }
+    .intro-box { background: #f5f5f5; border-left-color: #111; }
+    .account-card { background: #f9f9f9; border-color: #ccc; }
+    .mapa { background: #f5f5f5; }
+    .email-box { background: #f5f5f5; }
+    .footer { border-top-color: #ccc; }
+    .footer-brand, .footer-info { color: #aaa !important; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="brand"><span>✦ ABUNDANZA</span> &nbsp;·&nbsp; SESIÓN 1A1</div>
+    <h1>Diagnóstico<br>Digital</h1>
+    <div style="margin-top: 14px;">
+      <span style="font-family: 'Inter', sans-serif; font-weight: 900; font-size: 18px; letter-spacing: -0.01em; color: #C8C8C8;">Cyan Ocean</span>
+      <span style="color: #444; font-size: 14px; margin-left: 12px;">Artista Performática</span>
+    </div>
+    <div class="subtitle">Abril 2026 &nbsp;·&nbsp; La Paz, Bolivia</div>
+  </div>
+
+  <!-- INTRO -->
+  <div class="intro-box">
+    Este documento es tuyo para implementar. Está dividido en tres partes: primero los cambios que podés hacer hoy mismo en tus redes, después cómo armar tu portfolio artístico y a quién enviárselo, y al final cómo se conecta todo esto para que tus emprendimientos te sostengan mientras el trabajo de shows crece.
+    <br><br>
+    No hace falta hacer todo a la vez. Empezá por la Parte 1 — son cambios de texto y tarda menos de una hora.
+  </div>
+
+  <!-- ============================= PARTE 1 ============================= -->
+  <h2><span class="star">✦</span> PARTE 1 — Tus Instagrams</h2>
+  <p style="margin-bottom: 8px;">Tenés siete cuentas de Instagram. Eso no es el problema — el problema es que ninguna está cumpliendo su rol con claridad.</p>
+  <p style="margin-bottom: 8px;">El marco que te propongo es este: <strong style="color: #E8E8E8;">todas tus cuentas son una galería de arte.</strong> Publicás cuando tenés algo genuino que mostrar — sin presión, sin frecuencia forzada. La diferencia es que dos de ellas tienen un ritmo constante porque son las que hoy te dan de comer y las que te van a proyectar: <strong style="color: #E8E8E8;">@cian.ocean0</strong> y <strong style="color: #E8E8E8;">@lokota.pasion.vegana</strong>. Las demás publican cuando quieran — y todas, sin excepción, apuntan a tu Instagram personal.</p>
+
+  <h3>El mapa completo</h3>
+
+  <table class="account-table">
+    <thead>
+      <tr>
+        <th>Cuenta</th>
+        <th>Seguidores</th>
+        <th>Rol</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="handle">@cian.ocean0</span></td>
+        <td><span class="seg">1.038</span></td>
+        <td class="role-main">⬛ Tu cuenta principal — la artista completa</td>
+      </tr>
+      <tr>
+        <td><span class="handle">@xyan_acro_pole</span></td>
+        <td><span class="seg">987</span></td>
+        <td class="role-show">Archivo de shows — Acro Pole & Circo</td>
+      </tr>
+      <tr>
+        <td><span class="handle">@hechizah</span></td>
+        <td><span class="seg">390</span></td>
+        <td class="role-show">Archivo de shows — Performance sensible</td>
+      </tr>
+      <tr>
+        <td><span class="handle">@cyan.masajes.orientales</span></td>
+        <td><span class="seg">533</span></td>
+        <td class="role-biz">Negocio — Masajes tailandeses</td>
+      </tr>
+      <tr>
+        <td><span class="handle">@lokota.pasion.vegana</span></td>
+        <td><span class="seg">404</span></td>
+        <td class="role-biz">Negocio — Comida vegana</td>
+      </tr>
+      <tr>
+        <td><span class="handle">@brote.pasion.vegana</span></td>
+        <td>161</td>
+        <td class="role-biz">Galería libre — sub-marca de Lokota</td>
+      </tr>
+      <tr>
+        <td><span class="handle">@pasionaria.vegan.sin.gluten</span></td>
+        <td>40</td>
+        <td class="role-biz">Galería libre — sub-marca de Lokota</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="mapa">
+    <div style="text-align: center; margin-bottom: 8px; color: #555; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;">Todas apuntan a</div>
+    <div style="text-align: center;" class="centro">★ @cian.ocean0 ★</div>
+    <div style="text-align: center; margin: 6px 0 2px; color: #444; font-size: 11px;">↑ &nbsp;&nbsp;&nbsp; ↑ &nbsp;&nbsp;&nbsp; ↑ &nbsp;&nbsp;&nbsp; ↑ &nbsp;&nbsp;&nbsp; ↑ &nbsp;&nbsp;&nbsp; ↑</div>
+    <div style="text-align: center; display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-top: 4px;">
+      <span class="activo">@xyan_acro_pole</span>
+      <span class="activo">@hechizah</span>
+      <span class="activo">@cyan.masajes.orientales</span>
+      <span class="activo">@lokota.pasion.vegana</span>
+      <span class="activo">@brote.pasion.vegana</span>
+      <span class="activo">@pasionaria.vegan.sin.gluten</span>
+    </div>
+    <div style="margin-top: 16px; border-top: 1px solid #1a1a1a; padding-top: 12px; text-align: center; color: #555; font-size: 12px;">
+      @lokota menciona a @brote y @pasionaria &nbsp;·&nbsp; @brote y @pasionaria apuntan a @lokota
+    </div>
+  </div>
+
+  <!-- cian.ocean0 -->
+  <div class="account-card principal">
+    <div class="account-header">
+      <span class="account-name">@cian.ocean0</span>
+      <span class="account-seg">1.038 seguidores</span>
+      <span class="tag principal-tag">cuenta principal</span>
+    </div>
+
+    <p>Esta es tu cuenta más importante. Es donde la gente que te quiere contratar para shows necesita llegar. Hoy tiene más seguidores que todas las demás — usala a favor.</p>
+
+    <div class="cambio">
+      <div class="cambio-label">Bio actual</div>
+      <div class="cambio-actual">"Sou uma mais não sou só 🔥🌈⚡🌊"</div>
+      <div class="cambio-label" style="margin-top: 10px;">Bio propuesta</div>
+      <div class="cambio-nuevo">
+        Artista performática 🔥<br>
+        Fuego · Acro Pole · Circo · Show<br>
+        📍 Bolivia<br>
+        ✉️ Shows e intervenciones artísticas<br>
+        ↓ Portfolio & contacto
+      </div>
+    </div>
+
+    <div class="cambio">
+      <div class="cambio-label">Link en bio</div>
+      <div class="cambio-nuevo">Link a tu portfolio PDF (cuando lo tengas listo). Mientras tanto: tu número de WhatsApp directo o un formulario de Google para consultas de shows.</div>
+    </div>
+
+    <div class="cambio">
+      <div class="cambio-label">Foto de perfil</div>
+      <div class="cambio-nuevo">Foto en acción — fuego, pole, circo. Que quien llegue entienda en un segundo qué hacés. No foto de cara sola ni foto casual.</div>
+    </div>
+
+    <h4>Destacadas a crear</h4>
+    <table class="hl-table">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Qué va adentro</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>SHOWS</strong></td>
+          <td>Videos y fotos de tus mejores actuaciones en vivo. Lo más impactante primero.</td>
+        </tr>
+        <tr>
+          <td><strong>FUEGO</strong></td>
+          <td>Específico de tu manejo de fuego. Es tu diferencial más visual.</td>
+        </tr>
+        <tr>
+          <td><strong>ACRO</strong></td>
+          <td>Acrobacia en pole, circo, destrezas aéreas.</td>
+        </tr>
+        <tr>
+          <td><strong>CONTACTO</strong></td>
+          <td>Cómo contratarte: precio base, zonas donde viajás, WhatsApp o mail.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- xyan_acro_pole -->
+  <div class="account-card">
+    <div class="account-header">
+      <span class="account-name">@xyan_acro_pole</span>
+      <span class="account-seg">987 seguidores</span>
+      <span class="tag show-tag">shows / clases</span>
+    </div>
+
+    <p>Esta cuenta tiene mucho contenido real de tu trabajo — eso es valioso. Usala como archivo de tu actividad artística en acro y circo, y como la cuenta donde publicás tus clases y horarios. Todo lo que sea "contratar para show" redirigí a <strong>@cian.ocean0</strong>.</p>
+
+    <div class="cambio">
+      <div class="cambio-label">Bio propuesta</div>
+      <div class="cambio-nuevo">
+        Acro Pole · Circo · Destrezas aéreas<br>
+        Clases en La Paz 📍<br>
+        🎭 Shows → @cian.ocean0
+      </div>
+    </div>
+
+    <h4>Destacadas</h4>
+    <table class="hl-table">
+      <thead>
+        <tr>
+          <th>Qué hacés</th>
+          <th>Por qué</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Mantené <strong>Participaciones</strong></td>
+          <td>Es tu historial de trabajo — muy útil para el portfolio</td>
+        </tr>
+        <tr>
+          <td>Fusioná Horarios + Clases en uno solo</td>
+          <td>Menos highlights = más fácil de leer</td>
+        </tr>
+        <tr>
+          <td>Mantené <strong>b&n</strong></td>
+          <td>Galería artística en blanco y negro — da identidad</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- hechizah -->
+  <div class="account-card">
+    <div class="account-header">
+      <span class="account-name">@hechizah</span>
+      <span class="account-seg">390 seguidores</span>
+      <span class="tag show-tag">performance sensible</span>
+    </div>
+
+    <p>Esta cuenta tiene su propio mundo y su propia audiencia. Tiene sentido mantenerla separada — no todo el mundo que te contrata para fuego y circo necesita encontrar este contenido primero. Que quien llegue entienda dónde está.</p>
+
+    <div class="cambio">
+      <div class="cambio-label">Bio propuesta</div>
+      <div class="cambio-nuevo">
+        Arte performático · Exploración del cuerpo<br>
+        🌊 @cian.ocean0
+      </div>
+    </div>
+
+    <p style="font-size: 13px; color: #666; margin-top: 8px;">No hace falta cambiar más nada acá. Las destacadas que tenés están bien organizadas para quien llega a esta cuenta específicamente.</p>
+  </div>
+
+  <!-- cyan.masajes.orientales -->
+  <div class="account-card">
+    <div class="account-header">
+      <span class="account-name">@cyan.masajes.orientales</span>
+      <span class="account-seg">533 seguidores</span>
+      <span class="tag biz-tag">negocio</span>
+    </div>
+
+    <p>Esta cuenta está bien. Tiene bio clara, highlights organizados por tipo de masaje, y una audiencia real. Dos cambios mínimos:</p>
+
+    <div class="cambio">
+      <div class="cambio-label">Agregar a la bio</div>
+      <div class="cambio-nuevo">Una línea al final: "✦ @cian.ocean0" para que quien te descubra por masajes pueda encontrarte como artista.</div>
+    </div>
+
+    <div class="cambio">
+      <div class="cambio-label">Link en bio</div>
+      <div class="cambio-nuevo">Asegurate de que el link lleve directo a tu WhatsApp para reservas — no a tu perfil principal ni a nada que tenga muchos pasos.</div>
+    </div>
+  </div>
+
+  <!-- lokota -->
+  <div class="account-card">
+    <div class="account-header">
+      <span class="account-name">@lokota.pasion.vegana</span>
+      <span class="account-seg">404 seguidores</span>
+      <span class="tag biz-tag">negocio activo</span>
+    </div>
+
+    <p>Lokota es la cuenta madre de toda la comida y una de las dos que mantiene ritmo constante. Su bio conecta hacia arriba (a tu cuenta personal) y hacia adentro (menciona las sub-marcas para quien quiera explorar más).</p>
+
+    <div class="cambio">
+      <div class="cambio-label">Bio propuesta</div>
+      <div class="cambio-nuevo">
+        Sabores deliciosos y nutritivos 🌱<br>
+        Visitá también @brote.pasion.vegana y @pasionaria.vegan.sin.gluten<br>
+        ✦ @cian.ocean0
+      </div>
+    </div>
+
+    <div class="cambio">
+      <div class="cambio-label">Link en bio</div>
+      <div class="cambio-nuevo">WhatsApp directo para pedidos o consultas. Sin pasos intermedios.</div>
+    </div>
+  </div>
+
+  <!-- brote -->
+  <div class="account-card">
+    <div class="account-header">
+      <span class="account-name">@brote.pasion.vegana</span>
+      <span class="account-seg">161 seguidores</span>
+      <span class="tag biz-tag">galería libre</span>
+    </div>
+
+    <p>Publicás cuando tenés ganas. No hay presión de frecuencia — esta cuenta existe, tiene su audiencia, y suma al universo de comida. Lo único que cambia es la bio, para que quien llegue acá sepa dónde encontrar todo.</p>
+
+    <div class="cambio">
+      <div class="cambio-label">Bio propuesta</div>
+      <div class="cambio-nuevo">
+        Brote · parte de @lokota.pasion.vegana<br>
+        ✦ @cian.ocean0
+      </div>
+    </div>
+  </div>
+
+  <!-- pasionaria -->
+  <div class="account-card">
+    <div class="account-header">
+      <span class="account-name">@pasionaria.vegan.sin.gluten</span>
+      <span class="account-seg">40 seguidores</span>
+      <span class="tag biz-tag">galería libre</span>
+    </div>
+
+    <p>Igual que Brote — publicás cuando sentís que tenés algo para mostrar. La bio hace el trabajo de conectar.</p>
+
+    <div class="cambio">
+      <div class="cambio-label">Bio propuesta</div>
+      <div class="cambio-nuevo">
+        Pastelería artesanal · parte de @lokota.pasion.vegana<br>
+        ✦ @cian.ocean0
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================= PARTE 2 ============================= -->
+  <h2><span class="star">✦</span> PARTE 2 — Tu Portfolio Artístico</h2>
+
+  <h3>Por qué lo necesitás</h3>
+  <p>Las personas que contratan artistas para shows — productoras, festivales, hoteles, eventos — reciben cientos de mensajes por Instagram. Un DM no alcanza. Un portfolio dice: <em>"soy una profesional que se toma en serio lo que hace."</em></p>
+  <p>No es una carpeta para mostrar. Es tu herramienta de prospección: lo mandás por mail, lo adjuntás cuando postulás a un festival, lo compartís cuando alguien te pregunta "¿y qué hacés exactamente?".</p>
+
+  <h3>Qué tiene que tener — la lista mínima</h3>
+
+  <ul class="checklist">
+    <li>
+      <div class="check-box"></div>
+      <div>
+        <strong>Quién sos — en 3 líneas</strong>
+        Nombre artístico. Qué hacés. Dónde estás basada y si podés viajar. <br>
+        <em style="color: #666; font-size: 13px;">Ejemplo: "Cyan Ocean es artista performática con base en La Paz, Bolivia. Se especializa en manejo de fuego, acrobacia en pole y circo contemporáneo. Disponible para shows, festivales e intervenciones artísticas en Bolivia y el exterior."</em>
+      </div>
+    </li>
+    <li>
+      <div class="check-box"></div>
+      <div>
+        <strong>Tus destrezas — lista clara</strong>
+        Manejo de fuego · Acro Pole · Circo (destrezas aéreas) · Danza performática · Performance erótica / cabaré (en sección aparte si lo incluís)
+      </div>
+    </li>
+    <li>
+      <div class="check-box"></div>
+      <div>
+        <strong>Fotos en acción — mínimo 5</strong>
+        No selfies. Fotos de shows reales, ensayos, o sesiones fotográficas. Lo más impactante al inicio. Si tenés fotos de buena calidad de @xyan_acro_pole, usalas.
+      </div>
+    </li>
+    <li>
+      <div class="check-box"></div>
+      <div>
+        <strong>Video showreel — 2 a 3 minutos</strong>
+        Lo mejor de tus shows en un solo video. Si no tenés uno editado todavía, podés linkear a tus 2 o 3 Reels más fuertes. El link va en el PDF como texto clicable.
+      </div>
+    </li>
+    <li>
+      <div class="check-box"></div>
+      <div>
+        <strong>Participaciones y experiencia</strong>
+        Eventos donde actuaste. Compañías con las que trabajaste. Aunque sean locales — todo suma. Revisá la destacada "Participaciones" de @xyan_acro_pole, ahí está mucho de esto.
+      </div>
+    </li>
+    <li>
+      <div class="check-box"></div>
+      <div>
+        <strong>Datos de contacto</strong>
+        Mail · WhatsApp · Instagram principal (@cian.ocean0). Solo eso. No pongas las 7 cuentas.
+      </div>
+    </li>
+  </ul>
+
+  <h3>Cómo encontrar a quién enviárselo</h3>
+
+  <h4>Dónde buscar</h4>
+  <p>
+    Festivales de circo contemporáneo en Latinoamérica (Festival de Circo de Santiago, Temporada de Circo Buenos Aires, Feria de Teatro de Manizales, Circo del Mundo Chile). Hoteles boutique y resorts que contratan entertainers para eventos — buscalos en Instagram con hashtags como #eventosbolivia #showbolivia #artistasbolivia. Productoras de eventos en Bolivia y países vecinos. Grupos de Facebook de contrataciones artísticas.
+  </p>
+
+  <h4>El mail para prospectar</h4>
+  <div class="email-box">
+    <div class="email-label">✦ Plantilla de mail — copiá y personalizá</div>
+    <div class="email-field"><strong>Asunto:</strong> Artista performática disponible — Cyan Ocean</div>
+    <p>Hola [nombre],</p>
+    <p>Vi que [producen eventos con artistas / trabajan con circo / organizan el festival X] y quería presentarme.</p>
+    <p>Soy Cyan Ocean, artista performática basada en La Paz, Bolivia. Me especializo en manejo de fuego, acrobacia en pole y circo contemporáneo.</p>
+    <p>Adjunto mi portfolio. Video de referencia: [link a tu reel o showreel]</p>
+    <p>Quedo a disposición para cualquier consulta.</p>
+    <p>Saludos,<br>Cyan<br>WhatsApp: [tu número]<br>Instagram: @cian.ocean0</p>
+  </div>
+
+  <p style="font-size: 13px; color: #666;">Nota: personalizá la primera línea para cada mail. Que no parezca una campaña masiva — parezca que los elegiste a ellos específicamente.</p>
+
+  <!-- ============================= PARTE 3 ============================= -->
+  <h2><span class="star">✦</span> PARTE 3 — Cómo se vincula todo</h2>
+
+  <p>Lo que estás armando no es solo un Instagram bonito. Es un sistema donde cada pieza cumple una función.</p>
+
+  <p><strong style="color: #E8E8E8;">Tus negocios (masajes + comida) te dan tranquilidad económica.</strong> Eso te permite decir que sí a los shows que valen la pena, sin bajar el precio por urgencia. No son un plan B — son los que te permiten tener un plan A sin apuro.</p>
+
+  <p><strong style="color: #E8E8E8;">Tu cuenta personal (@cian.ocean0) es el nexo.</strong> Quien te encuentre por los masajes puede descubrirte como artista. Quien llegue buscando shows ve en tu bio que también tenés dos emprendimientos activos — eso dice que sos una profesional con vida real, no solo una cuenta de Instagram.</p>
+
+  <p><strong style="color: #E8E8E8;">El portfolio es lo que convierte la visibilidad en trabajo real.</strong> Instagram te hace encontrable. El portfolio te hace contratable.</p>
+
+  <h3>La hoja de ruta</h3>
+
+  <div class="ruta">
+
+    <div class="ruta-paso">
+      <div class="ruta-num">1</div>
+      <div class="ruta-content">
+        <strong>Hoy — Cambios en bios y destacadas</strong>
+        <span>@cian.ocean0 · @xyan_acro_pole · @hechizah · @cyan.masajes.orientales · @lokota.pasion.vegana</span>
+      </div>
+    </div>
+    <div class="ruta-connector"></div>
+
+    <div class="ruta-paso">
+      <div class="ruta-num">2</div>
+      <div class="ruta-content">
+        <strong>Esta semana — Armar el portfolio</strong>
+        <span>Juntá fotos, armá el texto, identificá tus mejores videos</span>
+      </div>
+    </div>
+    <div class="ruta-connector"></div>
+
+    <div class="ruta-paso">
+      <div class="ruta-num">3</div>
+      <div class="ruta-content">
+        <strong>Próximas 2 semanas — Identificar y prospectar</strong>
+        <span>Encontrá 10 compañías, festivales o productoras y enviá mails personalizados</span>
+      </div>
+    </div>
+    <div class="ruta-connector"></div>
+
+    <div class="ruta-paso">
+      <div class="ruta-num">4</div>
+      <div class="ruta-content">
+        <strong>De ahora en adelante — ritmo en las dos cuentas activas</strong>
+        <span>Ver sugerencias abajo</span>
+      </div>
+    </div>
+    <div class="ruta-connector"></div>
+
+    <div class="ruta-paso">
+      <div class="ruta-num">5</div>
+      <div class="ruta-content">
+        <strong>Resultado — Presencia clara + portfolio listo</strong>
+        <span>Cada vez que alguien te busca, encuentra exactamente lo que tiene que ver</span>
+      </div>
+    </div>
+
+  </div>
+
+  <h3>Sugerencias de contenido</h3>
+
+  <p>No es una obligación — es una referencia para cuando no sabés qué publicar. Arrancá por las stories: son lo más fácil, lo más vivo, y lo que mantiene la cuenta activa entre post y post.</p>
+
+  <div class="account-card principal" style="margin-bottom: 16px;">
+    <div class="account-header" style="margin-bottom: 12px;">
+      <span class="account-name">@cian.ocean0</span>
+      <span class="tag principal-tag">1–2 posts por semana</span>
+    </div>
+    <h4 style="margin-top: 0;">Ideas de posts</h4>
+    <table class="hl-table">
+      <tbody>
+        <tr><td>Un clip de un ensayo o show reciente — sin editar, crudo, real</td></tr>
+        <tr><td>Foto en acción con un texto corto de lo que estabas sintiendo ese día</td></tr>
+        <tr><td>Un "detrás de escena" — preparando el fuego, en vestuario, viajando a un show</td></tr>
+        <tr><td>Una reflexión corta sobre tu proceso artístico — en tu voz, sin ponerte a explicar</td></tr>
+        <tr><td>Repost de una participación o mención — que otros hablen de vos también</td></tr>
+      </tbody>
+    </table>
+    <h4>Stories — siempre activas</h4>
+    <p style="font-size: 13.5px;">Las stories son lo que mantiene vivo tu perfil entre publicaciones. No tienen que ser perfectas: un momento del día, algo que te gustó, un avance de un show que viene. Lo importante es que haya movimiento. <strong style="color: #E8E8E8;">Si no publicás un post, al menos subí una story.</strong></p>
+  </div>
+
+  <div class="account-card" style="margin-bottom: 16px;">
+    <div class="account-header" style="margin-bottom: 12px;">
+      <span class="account-name">@lokota.pasion.vegana</span>
+      <span class="tag biz-tag">2–3 posts por semana</span>
+    </div>
+    <h4 style="margin-top: 0;">Ideas de posts</h4>
+    <table class="hl-table">
+      <tbody>
+        <tr><td>Foto de un plato bien iluminado — natural, sin montaje complicado</td></tr>
+        <tr><td>El proceso: preparando algo, mostrando los ingredientes, mezclando</td></tr>
+        <tr><td>Un dato sobre la cocina vegana que sorprenda o genere curiosidad</td></tr>
+        <tr><td>Anuncio de feria o evento donde van a estar</td></tr>
+        <tr><td>Un cliente feliz, una historia de pedido, algo que pasó esa semana</td></tr>
+      </tbody>
+    </table>
+    <h4>Stories — siempre activas</h4>
+    <p style="font-size: 13.5px;">Usá las stories de Lokota para mostrar el día a día del emprendimiento: lo que se está preparando, lo que se agotó, el próximo sabor que viene. Es la forma más fácil de mantener contacto con tu comunidad sin tener que armar un post completo. <strong style="color: #E8E8E8;">Stories activas = gente que no te olvida.</strong></p>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-brand">✦ ABUNDANZA</div>
+    <div class="footer-info">
+      Sesión 1a1 · Abril 2026<br>
+      abundanza.vercel.app
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

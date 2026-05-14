@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Embudo Abundanza ✦</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background-color: #080808;
+    background-image:
+      linear-gradient(135deg, rgba(255,255,255,0.015) 0%, transparent 40%),
+      linear-gradient(225deg, rgba(255,255,255,0.01) 0%, transparent 50%),
+      repeating-linear-gradient(72deg, transparent, transparent 120px, rgba(255,255,255,0.012) 120px, rgba(255,255,255,0.012) 122px);
+    color: #F0F0F0;
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    padding: 48px 24px 80px;
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 64px;
+  }
+
+  header h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 52px;
+    letter-spacing: 0.15em;
+    color: #E8E8E8;
+  }
+
+  header p {
+    color: #888;
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    margin-top: 8px;
+  }
+
+  .star {
+    color: #C8C8C8;
+  }
+
+  /* FUNNEL CONTAINER */
+  .funnel {
+    max-width: 960px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  /* PHASE LABEL */
+  .phase-label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: #888;
+    text-align: center;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+  }
+
+  /* CARD */
+  .card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(200,200,200,0.12);
+    border-radius: 2px;
+    padding: 28px 32px;
+    position: relative;
+    transition: border-color 0.2s;
+  }
+
+  .card:hover {
+    border-color: rgba(200,200,200,0.3);
+  }
+
+  .card-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 26px;
+    letter-spacing: 0.13em;
+    color: #E8E8E8;
+    margin-bottom: 4px;
+  }
+
+  .card-subtitle {
+    font-size: 12px;
+    color: #888;
+    letter-spacing: 0.05em;
+    margin-bottom: 16px;
+  }
+
+  .card-body {
+    font-size: 13px;
+    color: #C8C8C8;
+    line-height: 1.7;
+  }
+
+  .tag {
+    display: inline-block;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    padding: 3px 10px;
+    border: 1px solid rgba(200,200,200,0.2);
+    border-radius: 1px;
+    color: #888;
+    margin-top: 12px;
+    margin-right: 6px;
+  }
+
+  .tag.active {
+    border-color: rgba(200,200,200,0.5);
+    color: #C8C8C8;
+  }
+
+  .file-ref {
+    font-size: 11px;
+    color: #555;
+    margin-top: 14px;
+    font-family: 'Inter', monospace;
+    letter-spacing: 0.03em;
+  }
+
+  .file-ref span {
+    color: #888;
+  }
+
+  /* ARROW */
+  .arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 48px;
+    color: #333;
+    font-size: 22px;
+    position: relative;
+  }
+
+  .arrow::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, rgba(200,200,200,0.15), rgba(200,200,200,0.05));
+  }
+
+  .arrow-icon {
+    background: #111;
+    border: 1px solid rgba(200,200,200,0.15);
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    color: #555;
+    z-index: 1;
+  }
+
+  /* SPLIT */
+  .split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .split-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+  }
+
+  /* HIGHLIGHT CARD */
+  .card.highlight {
+    border-color: rgba(200,200,200,0.25);
+    background: rgba(200,200,200,0.04);
+  }
+
+  .card.highlight .card-title {
+    color: #F0F0F0;
+  }
+
+  /* NUMBER BADGE */
+  .badge {
+    display: inline-block;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    color: #C8C8C8;
+    border: 1px solid rgba(200,200,200,0.2);
+    padding: 2px 8px;
+    margin-bottom: 12px;
+  }
+
+  /* STATUS */
+  .status {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    padding: 2px 8px;
+    border-radius: 1px;
+    position: absolute;
+    top: 16px;
+    right: 16px;
+  }
+
+  .status.done { background: rgba(200,200,200,0.1); color: #C8C8C8; }
+  .status.pending { background: rgba(255,255,255,0.04); color: #555; }
+  .status.active { background: rgba(200,255,200,0.06); color: #8aab8a; }
+
+  .divider {
+    height: 1px;
+    background: rgba(200,200,200,0.08);
+    margin: 10px 0 14px;
+  }
+
+  .big-number {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 42px;
+    color: #fff;
+    letter-spacing: 0.05em;
+    line-height: 1;
+  }
+
+  .section-gap {
+    margin-top: 16px;
+  }
+
+  footer {
+    text-align: center;
+    margin-top: 80px;
+    color: #333;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+  }
+
+  footer .star-big {
+    font-size: 28px;
+    color: #C8C8C8;
+    display: block;
+    margin-bottom: 12px;
+  }
+
+  @media (max-width: 640px) {
+    .split, .split-3 { grid-template-columns: 1fr; }
+    header h1 { font-size: 36px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1><span class="star">✦</span> EMBUDO ABUNDANZA <span class="star">✦</span></h1>
+  <p>Mapa completo del ecosistema · Mayo 2026</p>
+</header>
+
+<div class="funnel">
+
+  <!-- ENTRADA -->
+  <div class="phase-label">✦ Entrada</div>
+
+  <div class="card">
+    <span class="status active">EN CURSO</span>
+    <div class="badge">FASE 1</div>
+    <div class="card-title">Instagram @abundanza_</div>
+    <div class="card-subtitle">Pre-lanzamiento · 30 Abril → 7 Mayo</div>
+    <div class="divider"></div>
+    <div class="card-body">
+      <strong style="color:#E8E8E8">Stories</strong> — arco de 7 días estilo Nude Project. Una story por día, fondo negro, texto mínimo, sin música.<br><br>
+      <strong style="color:#E8E8E8">Bio actualizada</strong> — "✦ Para la gente que hace que más gente baile: Profes de danza · Directores de academia. DROP: mayo 2026"<br><br>
+      <strong style="color:#E8E8E8">CTA del día 7</strong> — Reel de lanzamiento + links a los dos grupos de WhatsApp
+    </div>
+    <div class="file-ref"><span>📄</span> guiones/stories-prelanzamiento.md</div>
+    <div>
+      <span class="tag active">Story D0 publicada hoy</span>
+      <span class="tag">Bio actualizada</span>
+      <span class="tag">Reel pendiente (martes 5/5)</span>
+    </div>
+  </div>
+
+  <div class="arrow"><div class="arrow-icon">↓</div></div>
+
+  <!-- WHATSAPP -->
+  <div class="phase-label">✦ Comunidad</div>
+
+  <div class="split">
+    <div class="card">
+      <div class="badge">GRUPO A</div>
+      <div class="card-title">Directores de Academia</div>
+      <div class="card-subtitle">WhatsApp · 14 días de nutrición</div>
+      <div class="divider"></div>
+      <div class="card-body">
+        Secuencia de 14 mensajes estratégicos. Un mensaje por día.<br><br>
+        D0: Bienvenida + link Abundanza Chat<br>
+        D3–6: Conciencia del problema<br>
+        D7–10: Mostrar el sistema<br>
+        D11–13: Presentar Keep<br>
+        D14: Abrir formulario
+      </div>
+      <div class="file-ref"><span>📄</span> guiones/whatsapp-secuencia-grupos.md</div>
+    </div>
+
+    <div class="card">
+      <div class="badge">GRUPO B</div>
+      <div class="card-title">Profes que Crecen</div>
+      <div class="card-subtitle">WhatsApp · 14 días de nutrición</div>
+      <div class="divider"></div>
+      <div class="card-body">
+        Misma estructura que el grupo A pero contenido específico para profes de danza.<br><br>
+        D0: Bienvenida + link Abundanza Chat<br>
+        D3–6: Conciencia del problema<br>
+        D7–10: Sistema de contenido<br>
+        D11+: Anticipar La Mentoría<br>
+        Formulario: 3 meses después
+      </div>
+      <div class="file-ref"><span>📄</span> guiones/whatsapp-secuencia-grupos.md</div>
+    </div>
+  </div>
+
+  <div class="arrow"><div class="arrow-icon">↓</div></div>
+
+  <!-- HERRAMIENTAS -->
+  <div class="phase-label">✦ Herramientas</div>
+
+  <div class="card">
+    <span class="status done">LISTO</span>
+    <div class="badge">LEAD MAGNET</div>
+    <div class="card-title">Abundanza Chat</div>
+    <div class="card-subtitle">abundanza.vercel.app · Diagnóstico con IA · Gratis</div>
+    <div class="divider"></div>
+    <div class="split section-gap">
+      <div>
+        <div style="color:#E8E8E8; font-size:13px; margin-bottom:8px">🎓 Flujo Director/a</div>
+        <div class="card-body">
+          Calculadora de rentabilidad. Recopila áreas, alumnos, precios, gastos y meta. Entrega informe HTML descargable con plan de acción.
+        </div>
+      </div>
+      <div>
+        <div style="color:#E8E8E8; font-size:13px; margin-bottom:8px">💃 Flujo Profe</div>
+        <div class="card-body">
+          Diagnóstico de perfil (Viral / Pedagogo / Híbrido). Entrega plan de contenido HTML con 4 pilares, plan de rodaje y 2 guiones listos.
+        </div>
+      </div>
+    </div>
+    <div class="divider" style="margin-top:20px"></div>
+    <div style="color:#888; font-size:12px; margin-top:4px">Si la app no carga → prompts de respaldo para ChatGPT · Gemini · Claude</div>
+    <div class="file-ref"><span>📄</span> prompts/chatgpt.md · prompts/gemini.md · prompts/claude.md</div>
+    <div><span class="tag">Pendiente: API key OpenAI</span></div>
+  </div>
+
+  <div class="arrow"><div class="arrow-icon">↓</div></div>
+
+  <!-- YOUTUBE -->
+  <div class="phase-label">✦ Contenido</div>
+
+  <div class="card">
+    <span class="status pending">PENDIENTE GRABAR</span>
+    <div class="badge">VIDEO TUTORIAL</div>
+    <div class="card-title">YouTube — Tutorial Completo</div>
+    <div class="card-subtitle">Horizontal · 15–17 min · Cámara + pantalla · Grabar martes 5/5</div>
+    <div class="divider"></div>
+    <div class="card-body">
+      Cubre: Abundanza Chat completo (flujo director + flujo profe) + los 3 prompts de respaldo (ChatGPT / Gemini / Claude).<br><br>
+      Se suben 5 clips a Instagram/TikTok desde el mismo video.
+    </div>
+    <div class="file-ref"><span>📄</span> guiones/video-tutorial-youtube.md</div>
+  </div>
+
+  <div class="arrow"><div class="arrow-icon">↓</div></div>
+
+  <!-- FORMULARIO -->
+  <div class="phase-label">✦ Calificación</div>
+
+  <div class="card highlight">
+    <span class="status pending">DÍA 14</span>
+    <div class="badge">SOLO DIRECTORES</div>
+    <div class="card-title">Formulario Abundanza Keep</div>
+    <div class="card-subtitle">Google Forms · Se abre en el grupo Directores de Academia el día 14</div>
+    <div class="divider"></div>
+    <div class="card-body">
+      6 preguntas + nota de inversión obligatoria.<br>
+      Filtro por nivel de facturación (rangos USD) y disponibilidad de fondos.<br><br>
+      <span style="color:#E8E8E8">Meta:</span> ~10 completan → 3 califican → 2 cierran
+    </div>
+    <div style="margin-top: 16px">
+      <div style="color:#888; font-size:11px; letter-spacing:0.08em; margin-bottom:8px">NOTA DE INVERSIÓN EN EL FORMULARIO:</div>
+      <div style="color:#C8C8C8; font-size:13px; font-style:italic; border-left: 1px solid rgba(200,200,200,0.2); padding-left:12px">
+        "La implementación de este programa requiere una inversión de entre USD 1.500 y USD 2.000."
+      </div>
+    </div>
+  </div>
+
+  <div class="arrow"><div class="arrow-icon">↓</div></div>
+
+  <!-- SEGUIMIENTOS -->
+  <div class="phase-label">✦ Seguimiento</div>
+
+  <div class="split-3">
+    <div class="card">
+      <div style="color:#8aab8a; font-size:11px; letter-spacing:0.1em; margin-bottom:10px">🟢 LEAD CALIENTE</div>
+      <div class="card-title" style="font-size:20px">Sí, tengo fondos</div>
+      <div class="divider"></div>
+      <div class="card-body">
+        Mensaje WhatsApp en 24hs. Link a Calendly para llamada de 20 min.
+      </div>
+    </div>
+
+    <div class="card">
+      <div style="color:#a89b6e; font-size:11px; letter-spacing:0.1em; margin-bottom:10px">🟡 LEAD TIBIO</div>
+      <div class="card-title" style="font-size:20px">Necesito más info</div>
+      <div class="divider"></div>
+      <div class="card-body">
+        Video explicativo de 2:30 min + seguimiento a los 4–5 días.
+      </div>
+      <div class="file-ref"><span>📄</span> guiones/video-lead-tibio-keep.md</div>
+    </div>
+
+    <div class="card">
+      <div style="color:#666; font-size:11px; letter-spacing:0.1em; margin-bottom:10px">⚫ LEAD FRÍO</div>
+      <div class="card-title" style="font-size:20px">No es el momento</div>
+      <div class="divider"></div>
+      <div class="card-body">
+        Un mensaje de cierre sin presión. Queda en el grupo en nutrición pasiva.
+      </div>
+    </div>
+  </div>
+
+  <div class="arrow"><div class="arrow-icon">↓</div></div>
+
+  <!-- PRODUCTOS -->
+  <div class="phase-label">✦ Productos</div>
+
+  <div class="split">
+
+    <div class="card highlight">
+      <span class="status active">PRIMERO</span>
+      <div class="badge">PARA DIRECTORES</div>
+      <div class="card-title">Abundanza Keep</div>
+      <div class="card-subtitle">Done For You · Acompañamiento 3 meses</div>
+      <div class="divider"></div>
+      <div class="card-body">
+        Macarena + Pato construyen el sistema de adquisición de alumnos con Meta Ads para la academia del cliente.<br><br>
+        3 sesiones/mes con Macarena · 1 sesión/mes con Pato<br>
+        Campañas activas desde el día 15 · USD 250 de pauta incluidos en el mes 1
+      </div>
+      <div style="margin-top:20px">
+        <div class="big-number">2.000</div>
+        <div style="color:#888; font-size:12px; margin-top:4px">USD · 3 meses · 2 plazas por ciclo</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <span class="status pending">3 MESES DESPUÉS</span>
+      <div class="badge">PARA PROFES</div>
+      <div class="card-title">Abundanza La Mentoría</div>
+      <div class="card-subtitle">Done With You · Evergreen</div>
+      <div class="divider"></div>
+      <div class="card-body">
+        Acompañamiento para profesores de danza que quieren organizar su contenido, crecer en Instagram y convertir seguidores en alumnos.<br><br>
+        Sistema de contenido + guiones + acompañamiento real.<br>
+        No es un curso grabado.
+      </div>
+      <div style="margin-top:20px">
+        <div class="big-number">15</div>
+        <div style="color:#888; font-size:12px; margin-top:4px">Plazas · Evergreen · Precio por definir</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="arrow"><div class="arrow-icon">↓</div></div>
+
+  <!-- REELS -->
+  <div class="phase-label">✦ Tracción orgánica</div>
+
+  <div class="card">
+    <span class="status pending">POST-LANZAMIENTO</span>
+    <div class="badge">CONTENIDO</div>
+    <div class="card-title">10 Reels — Estrategia Víctor Heras</div>
+    <div class="card-subtitle">Para Instagram y TikTok · Alimentan el evergreen de La Mentoría</div>
+    <div class="divider"></div>
+    <div class="card-body">
+      Estructura por video: Hook duro (0–3 seg) → Tensión / Promesa (3–8 seg) → Valor comprimido (8–35 seg) → Cierre con gancho.<br><br>
+      Dirigidos a los dos perfiles. Generan leads nuevos de forma orgánica después del lanzamiento.
+    </div>
+    <div><span class="tag pending">Guiones pendientes</span></div>
+  </div>
+
+</div>
+
+<footer>
+  <span class="star-big">✦</span>
+  <div style="color:#C8C8C8; font-family:'Bebas Neue', sans-serif; letter-spacing:0.15em; font-size:16px">ABUNDANZA</div>
+  <div style="margin-top:6px">Documento interno · Mayo 2026</div>
+</footer>
+
+</body>
+</html>
