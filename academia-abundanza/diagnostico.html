@@ -444,6 +444,61 @@
       white-space: nowrap;
     }
     .btn-error:hover { background: rgba(200,200,200,0.08); border-color: rgba(200,200,200,0.4); }
+
+    /* Capture form */
+    .capture-card {
+      margin-top: 6px;
+      padding-top: 18px;
+      border-top: 1px solid var(--border);
+    }
+    .capture-label {
+      font-size: 0.87rem;
+      color: var(--silver);
+      line-height: 1.65;
+      margin-bottom: 14px;
+      display: block;
+    }
+    .capture-row {
+      display: flex;
+      gap: 8px;
+    }
+    .capture-input {
+      flex: 1;
+      min-width: 0;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      padding: 10px 13px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .capture-input:focus { border-color: var(--border-hi); }
+    .capture-input::placeholder { color: #3a3a3a; }
+    .capture-btn {
+      background: var(--text);
+      color: #080808;
+      border: none;
+      border-radius: 2px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 900;
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      padding: 10px 15px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: background 0.18s;
+    }
+    .capture-btn:hover    { background: var(--silver-hi); }
+    .capture-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+    .capture-ok {
+      font-size: 0.87rem;
+      color: var(--silver);
+      padding: 6px 0 2px;
+    }
   </style>
 </head>
 <body>
@@ -697,7 +752,7 @@ REGLAS DE TONO:
 /* ═══════════════════════════════════════════════════════
    STATE
 ═══════════════════════════════════════════════════════ */
-const S = { profile: null, msgs: [], busy: false, done: false, result: '', errorCount: 0 };
+const S = { profile: null, msgs: [], busy: false, done: false, result: '', errorCount: 0, captured: false, pendingDiagnosis: null };
 
 /* ═══════════════════════════════════════════════════════
    NAVIGATION
@@ -712,10 +767,12 @@ function show(id) {
    PROFILE
 ═══════════════════════════════════════════════════════ */
 function pick(profile) {
-  S.profile = profile;
-  S.msgs    = [];
-  S.done    = false;
-  S.result  = '';
+  S.profile          = profile;
+  S.msgs             = [];
+  S.done             = false;
+  S.result           = '';
+  S.captured         = false;
+  S.pendingDiagnosis = null;
   const labels = { academia: 'Diagnóstico · Academia', profesor: 'Plan de Contenido · Profesor/a' };
   document.getElementById('bar-mode').textContent = labels[profile];
   show('s-chat');
@@ -797,24 +854,34 @@ async function callAI(messages, isInit) {
     const full = data.text ?? '';
     S.errorCount = 0;
     typing(false);
-    addMsg('ai', md(full));
-
-    if (isInit) {
-      S.msgs = [
-        { role: 'user',      content: 'Comenzar' },
-        { role: 'assistant', content: full }
-      ];
-    } else {
-      S.msgs.push({ role: 'assistant', content: full });
-    }
 
     const isFinal =
       full.includes('✦ DIAGNÓSTICO COMPLETO') ||
       full.includes('✦ TU PLAN DE CONTENIDO');
-    if (isFinal) {
-      S.done   = true;
-      S.result = full;
-      document.getElementById('btn-save').classList.add('on');
+
+    if (isFinal && !S.captured) {
+      // Guardamos el diagnóstico pero NO lo mostramos todavía
+      S.done             = true;
+      S.result           = full;
+      S.pendingDiagnosis = full;
+      if (isInit) {
+        S.msgs = [{ role: 'user', content: 'Comenzar' }, { role: 'assistant', content: full }];
+      } else {
+        S.msgs.push({ role: 'assistant', content: full });
+      }
+      showCaptureGate();
+    } else {
+      addMsg('ai', md(full));
+      if (isInit) {
+        S.msgs = [{ role: 'user', content: 'Comenzar' }, { role: 'assistant', content: full }];
+      } else {
+        S.msgs.push({ role: 'assistant', content: full });
+      }
+      if (isFinal) {
+        S.done   = true;
+        S.result = full;
+        document.getElementById('btn-save').classList.add('on');
+      }
     }
 
   } catch (err) {
@@ -895,6 +962,92 @@ function showMoreHelp() {
   addMsg('ai',
     `Entendemos perfectamente. Escribinos a <strong>@abundanza_</strong> en Instagram o al grupo de WhatsApp y Amelie te acompaña personalmente, sin costo.`
   );
+}
+
+/* ═══════════════════════════════════════════════════════
+   CAPTURA DE LEAD — WhatsApp (aparece ANTES del diagnóstico)
+═══════════════════════════════════════════════════════ */
+function showCaptureGate() {
+  const groupName = S.profile === 'academia'
+    ? 'Directores de Academia'
+    : 'Profes que Crecen';
+
+  const box = document.getElementById('msgs');
+  const tip = document.getElementById('typing');
+  const div = document.createElement('div');
+  div.className = 'msg ai';
+  div.id = 'capture-msg';
+  div.innerHTML = `
+    <div class="bubble">
+      Tu diagnóstico está listo.<br><br>
+      Para recibirlo, tenés que estar en nuestro grupo de WhatsApp <strong>${groupName}</strong> — es donde esto se pone bueno de verdad:<br><br>
+      — Herramientas complementarias a lo que acabás de hacer acá<br>
+      — Asesoramiento gratuito cuando lo necesitás — respondemos 24/7<br>
+      — Una comunidad que está en lo mismo que vos<br>
+      <div class="capture-card">
+        <span class="capture-label">Dejanos tu número y te sumamos ahora mismo.</span>
+        <div class="capture-row">
+          <input
+            class="capture-input"
+            id="capture-phone"
+            type="tel"
+            inputmode="numeric"
+            placeholder="Tu número de WhatsApp"
+            onkeydown="if(event.key==='Enter') submitCapture()"
+          >
+          <button class="capture-btn" id="capture-btn" onclick="submitCapture()">SUMARME →</button>
+        </div>
+        <div style="margin-top:12px;text-align:center">
+          <button class="btn-error" onclick="revealDiagnosis(true)">Ya soy parte del grupo → Ver mi diagnóstico</button>
+        </div>
+      </div>
+    </div>`;
+  box.insertBefore(div, tip);
+  scrollDown();
+}
+
+async function submitCapture() {
+  const phoneEl = document.getElementById('capture-phone');
+  const btn     = document.getElementById('capture-btn');
+  const phone   = (phoneEl.value || '').trim();
+  if (!phone) { phoneEl.focus(); return; }
+
+  btn.disabled    = true;
+  btn.textContent = '...';
+
+  const profile = S.profile === 'academia' ? 'Dueño/a de Academia' : 'Profesor/a de Danza';
+
+  try {
+    await fetch('/api/capture', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify({ phone, profile })
+    });
+  } catch (_) {}
+
+  const card = document.getElementById('capture-msg');
+  if (card) {
+    card.querySelector('.capture-card').innerHTML =
+      `<span class="capture-ok"><span class="star">✦</span> &nbsp;¡Listo! Te sumamos pronto. Acá va tu diagnóstico.</span>`;
+  }
+
+  setTimeout(() => revealDiagnosis(false), 700);
+}
+
+function revealDiagnosis(skipCapture) {
+  S.captured = true;
+
+  if (skipCapture) {
+    const card = document.getElementById('capture-msg');
+    if (card) card.remove();
+  }
+
+  if (S.pendingDiagnosis) {
+    addMsg('ai', md(S.pendingDiagnosis));
+    document.getElementById('btn-save').classList.add('on');
+    S.pendingDiagnosis = null;
+  }
+  scrollDown();
 }
 
 function grow(el) {
