@@ -499,6 +499,83 @@
       color: var(--silver);
       padding: 6px 0 2px;
     }
+
+    /* Email gate */
+    #s-email { background: var(--bg); }
+    .email-wrap {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 32px;
+      text-align: center;
+      max-width: 480px;
+      margin: 0 auto;
+      width: 100%;
+      gap: 24px;
+    }
+    .email-heading { font-size: clamp(2rem, 7vw, 3.2rem); color: var(--text); line-height: 1.0; }
+    .email-sub { font-size: 0.88rem; color: #555; line-height: 1.75; max-width: 320px; }
+    .email-field {
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      padding: 14px 16px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .email-field:focus { border-color: var(--border-hi); }
+    .email-field::placeholder { color: #3a3a3a; }
+    .email-submit {
+      width: 100%;
+      background: var(--text);
+      color: #080808;
+      border: none;
+      border-radius: 2px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 900;
+      font-size: 0.85rem;
+      letter-spacing: 0.2em;
+      padding: 16px;
+      cursor: pointer;
+      transition: background 0.18s;
+    }
+    .email-submit:hover { background: var(--silver-hi); }
+
+    /* WhatsApp block final */
+    .wa-block {
+      margin-top: 8px;
+      padding: 24px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.03);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .wa-title { font-size: 0.95rem; font-weight: 700; color: var(--silver); letter-spacing: 0.04em; }
+    .wa-desc { font-size: 0.875rem; color: #777; line-height: 1.72; }
+    .wa-btn {
+      display: inline-block;
+      background: transparent;
+      border: 1px solid var(--border-hi);
+      border-radius: 2px;
+      color: var(--silver);
+      font-family: 'Inter', sans-serif;
+      font-weight: 900;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      padding: 13px 20px;
+      text-decoration: none;
+      text-align: center;
+      transition: background 0.18s, color 0.18s;
+      margin-top: 4px;
+    }
+    .wa-btn:hover { background: var(--silver); color: #080808; }
   </style>
 </head>
 <body>
@@ -557,6 +634,43 @@
     </div>
 
   </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     EMAIL GATE
+══════════════════════════════════════════ -->
+<section id="s-email" class="screen">
+
+  <div class="prof-top marble">
+    <div class="mini-row">
+      <div class="logo-mini"><img src="abundanza-logo.png" alt="Abundanza"></div>
+      <span class="bb mini-brand">ABUNDANZA</span>
+    </div>
+  </div>
+
+  <div class="email-wrap">
+    <h2 class="bb email-heading a">CASI LISTO</h2>
+    <p class="email-sub a a1">Dejanos tus datos para recibir el resultado de tu diagnóstico.</p>
+    <input
+      class="email-field a a2"
+      id="email-name"
+      type="text"
+      autocomplete="given-name"
+      placeholder="Tu nombre"
+      onkeydown="if(event.key==='Enter') document.getElementById('email-input').focus()"
+    >
+    <input
+      class="email-field a a3"
+      id="email-input"
+      type="email"
+      inputmode="email"
+      autocomplete="email"
+      placeholder="Tu email"
+      onkeydown="if(event.key==='Enter') submitEmail()"
+    >
+    <button class="email-submit a a4" onclick="submitEmail()">EMPEZAR DIAGNÓSTICO →</button>
+  </div>
+
 </section>
 
 <!-- ══════════════════════════════════════════
@@ -752,7 +866,7 @@ REGLAS DE TONO:
 /* ═══════════════════════════════════════════════════════
    STATE
 ═══════════════════════════════════════════════════════ */
-const S = { profile: null, msgs: [], busy: false, done: false, result: '', errorCount: 0, captured: false, pendingDiagnosis: null };
+const S = { profile: null, name: '', email: '', msgs: [], busy: false, done: false, result: '', errorCount: 0 };
 
 /* ═══════════════════════════════════════════════════════
    NAVIGATION
@@ -767,17 +881,41 @@ function show(id) {
    PROFILE
 ═══════════════════════════════════════════════════════ */
 function pick(profile) {
-  S.profile          = profile;
-  S.msgs             = [];
-  S.done             = false;
-  S.result           = '';
-  S.captured         = false;
-  S.pendingDiagnosis = null;
+  S.profile = profile;
+  S.msgs    = [];
+  S.done    = false;
+  S.result  = '';
+  S.name    = '';
+  S.email   = '';
   const labels = { academia: 'Diagnóstico · Academia', profesor: 'Plan de Contenido · Profesor/a' };
   document.getElementById('bar-mode').textContent = labels[profile];
+  document.getElementById('btn-save').classList.remove('on');
+  document.getElementById('email-name').value  = '';
+  document.getElementById('email-input').value = '';
+  show('s-email');
+}
+
+async function submitEmail() {
+  const nameEl  = document.getElementById('email-name');
+  const emailEl = document.getElementById('email-input');
+  const name    = nameEl.value.trim();
+  const email   = emailEl.value.trim();
+  if (!name)  { nameEl.focus();  return; }
+  if (!email || !email.includes('@')) { emailEl.focus(); return; }
+  S.name  = name;
+  S.email = email;
+
+  const profile = S.profile === 'academia' ? 'Dueño/a de Academia' : 'Profesor/a de Danza';
+  try {
+    fetch('/api/capture', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify({ name, email, profile })
+    });
+  } catch (_) {}
+
   show('s-chat');
   document.getElementById('msgs').innerHTML = typingHTML();
-  document.getElementById('btn-save').classList.remove('on');
   callAI([{ role: 'user', content: 'Comenzar' }], true);
 }
 
@@ -859,29 +997,17 @@ async function callAI(messages, isInit) {
       full.includes('✦ DIAGNÓSTICO COMPLETO') ||
       full.includes('✦ TU PLAN DE CONTENIDO');
 
-    if (isFinal && !S.captured) {
-      // Guardamos el diagnóstico pero NO lo mostramos todavía
-      S.done             = true;
-      S.result           = full;
-      S.pendingDiagnosis = full;
-      if (isInit) {
-        S.msgs = [{ role: 'user', content: 'Comenzar' }, { role: 'assistant', content: full }];
-      } else {
-        S.msgs.push({ role: 'assistant', content: full });
-      }
-      showCaptureGate();
+    addMsg('ai', md(full));
+    if (isInit) {
+      S.msgs = [{ role: 'user', content: 'Comenzar' }, { role: 'assistant', content: full }];
     } else {
-      addMsg('ai', md(full));
-      if (isInit) {
-        S.msgs = [{ role: 'user', content: 'Comenzar' }, { role: 'assistant', content: full }];
-      } else {
-        S.msgs.push({ role: 'assistant', content: full });
-      }
-      if (isFinal) {
-        S.done   = true;
-        S.result = full;
-        document.getElementById('btn-save').classList.add('on');
-      }
+      S.msgs.push({ role: 'assistant', content: full });
+    }
+    if (isFinal) {
+      S.done   = true;
+      S.result = full;
+      document.getElementById('btn-save').classList.add('on');
+      showWhatsAppBlock();
     }
 
   } catch (err) {
@@ -965,9 +1091,12 @@ function showMoreHelp() {
 }
 
 /* ═══════════════════════════════════════════════════════
-   CAPTURA DE LEAD — WhatsApp (aparece ANTES del diagnóstico)
+   BLOQUE DE WHATSAPP — aparece DESPUÉS del diagnóstico
 ═══════════════════════════════════════════════════════ */
-function showCaptureGate() {
+function showWhatsAppBlock() {
+  const groupLink = S.profile === 'academia'
+    ? 'https://chat.whatsapp.com/DJ4LphLibQy4iGwyFSYDd8?mode=gi_t&utm_source=igweb&utm_campaign=wa_group_url_xma&source_surface=27'
+    : 'https://chat.whatsapp.com/FdrVACoDDViHqCiwTxohYL?mode=gi_t';
   const groupName = S.profile === 'academia'
     ? 'Directores de Academia'
     : 'Profes que Crecen';
@@ -976,77 +1105,15 @@ function showCaptureGate() {
   const tip = document.getElementById('typing');
   const div = document.createElement('div');
   div.className = 'msg ai';
-  div.id = 'capture-msg';
   div.innerHTML = `
     <div class="bubble">
-      Tu diagnóstico está listo.<br><br>
-      Para recibirlo, tenés que estar en nuestro grupo de WhatsApp <strong>${groupName}</strong> — es donde esto se pone bueno de verdad:<br><br>
-      — Herramientas complementarias a lo que acabás de hacer acá<br>
-      — Asesoramiento gratuito cuando lo necesitás — respondemos 24/7<br>
-      — Una comunidad que está en lo mismo que vos<br>
-      <div class="capture-card">
-        <span class="capture-label">Dejanos tu número y te sumamos ahora mismo.</span>
-        <div class="capture-row">
-          <input
-            class="capture-input"
-            id="capture-phone"
-            type="tel"
-            inputmode="numeric"
-            placeholder="Tu número de WhatsApp"
-            onkeydown="if(event.key==='Enter') submitCapture()"
-          >
-          <button class="capture-btn" id="capture-btn" onclick="submitCapture()">SUMARME →</button>
-        </div>
-        <div style="margin-top:12px;text-align:center">
-          <button class="btn-error" onclick="revealDiagnosis(true)">Ya soy parte del grupo → Ver mi diagnóstico</button>
-        </div>
+      <div class="wa-block">
+        <span class="wa-title"><span class="star">✦</span> No te quedés con esto solo/a</span>
+        <p class="wa-desc">En el grupo <strong>${groupName}</strong> evacuamos tus dudas, compartimos herramientas y nos acompañamos. Para quienes hicieron este diagnóstico, es el siguiente paso natural — y literal es peor quedarse afuera.</p>
+        <a class="wa-btn" href="${groupLink}" target="_blank">UNIRME AL GRUPO →</a>
       </div>
     </div>`;
   box.insertBefore(div, tip);
-  scrollDown();
-}
-
-async function submitCapture() {
-  const phoneEl = document.getElementById('capture-phone');
-  const btn     = document.getElementById('capture-btn');
-  const phone   = (phoneEl.value || '').trim();
-  if (!phone) { phoneEl.focus(); return; }
-
-  btn.disabled    = true;
-  btn.textContent = '...';
-
-  const profile = S.profile === 'academia' ? 'Dueño/a de Academia' : 'Profesor/a de Danza';
-
-  try {
-    await fetch('/api/capture', {
-      method:  'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body:    JSON.stringify({ phone, profile })
-    });
-  } catch (_) {}
-
-  const card = document.getElementById('capture-msg');
-  if (card) {
-    card.querySelector('.capture-card').innerHTML =
-      `<span class="capture-ok"><span class="star">✦</span> &nbsp;¡Listo! Te sumamos pronto. Acá va tu diagnóstico.</span>`;
-  }
-
-  setTimeout(() => revealDiagnosis(false), 700);
-}
-
-function revealDiagnosis(skipCapture) {
-  S.captured = true;
-
-  if (skipCapture) {
-    const card = document.getElementById('capture-msg');
-    if (card) card.remove();
-  }
-
-  if (S.pendingDiagnosis) {
-    addMsg('ai', md(S.pendingDiagnosis));
-    document.getElementById('btn-save').classList.add('on');
-    S.pendingDiagnosis = null;
-  }
   scrollDown();
 }
 
